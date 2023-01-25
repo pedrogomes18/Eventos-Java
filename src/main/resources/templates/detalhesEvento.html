@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="PT-BR" xmlns:th="http://thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	<head>
+			<meta charset="UTF-8">
+			<title>Detalhes Evento</title>
+			<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+	      	<!--Import materialize.css-->
+	      	<link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css"  media="screen,projection"/>
+	
+	      	<!--Let browser know website is optimized for mobile-->
+	      	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	</head>
+	<body>
+		<header>
+			<nav class="menu" >
+			    <div class="nav-wrapper" style="margin: 0 auto; width: 70%">
+			      <a href="/listar" class="brand-logo">Eventos</a>
+			      <ul id="nav-mobile" class="right hide-on-med-and-down">
+			        <li><a href="/cadastrar"><i class="material-icons left">add_circle_outline</i>Cadastrar evento</a></li>
+			        <li><a href="/listar"><i class="material-icons left">format_list_bulleted</i>Listar evento</a></li>
+			      </ul>
+			    </div>
+			</nav>
+		</header>
+		
+		<main style="margin: 2rem auto; width:70%">
+			<h2 style="font-size: 28px; font-family:cursive;">Detalhes Evento</h2>
+			
+			<div th:each="evento : ${evento}" class="conteiner" >
+				<div class="col" style="display: flex; justify-content: space-around; font-size: 18px">
+					<span th:text="${evento.nome}"></span>
+					<span th:text="${evento.local}"></span>
+					<span th:text="${evento.data}"></span>
+					<span th:text="${evento.detalhes}"></span>
+					<span th:text="${evento.horario}"></span>
+					
+				</div>
+			</div>
+			
+			<form method="POST" style="margin: 2rem auto; width:50%">
+				<th:block th:include="msgValidacao"></th:block><br><br>
+				Nome do Convidado:<input type="text" name="nomeConvidado" value="" required="required"/>
+				RG:<input type="text" name="rg" value="" required="required"/>
+				<button  class="waves-effect waves-light btn" type="submit">Adicionar Convidado</button>
+			</form>
+			
+			
+			
+			<table class="container" style="margin: 2rem auto">
+				<thead>
+					<tr>
+						<th>Nome Convidado</th>
+						<th>RG</th>
+						<th>Deletar</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="convidado : ${convidados}">
+						<td><span th:text="${convidado.nomeConvidado}"></span></td>
+						<td><span th:text="${convidado.rg}"></span></td>
+						<td><a class="waves-effect waves-light btn" th:href="${(#mvc.url('EC#deletarConvidado').arg(0, convidado.rg)).build()}">
+								<i class="material-icons left">delete_forever</i>
+							</a>
+						</td>
+					</tr>
+				</tbody>
+			
+			</table>
+	
+		</main>
+	
+		<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    	<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+	</body>
+</html>
